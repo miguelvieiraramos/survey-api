@@ -11,9 +11,9 @@ def test_should_return_400_if_no_name_is_provided():
         }
     }
     http_response = sut.handle(http_request)
-    assert http_response.get('status_code') == 400
-    assert isinstance(http_response.get('body'), Exception)
-    assert http_response.get('body').args[0] == 'Missing param: name'
+    assert http_response.status_code == 400
+    assert isinstance(http_response.body, Exception)
+    assert http_response.body.args[0] == 'Missing param: name'
 
 
 def test_should_return_400_if_no_email_is_provided():
@@ -26,6 +26,6 @@ def test_should_return_400_if_no_email_is_provided():
         }
     }
     http_response = sut.handle(http_request)
-    assert http_response.get('status_code') == 400
-    assert isinstance(http_response.get('body'), Exception)
-    assert http_response.get('body').args[0] == 'Missing param: email'
+    assert http_response.status_code == 400
+    assert isinstance(http_response.body, Exception)
+    assert http_response.body.args[0] == 'Missing param: email'

@@ -1,14 +1,11 @@
+from presentation.protocols.http import HttpResponse, HttpRequest
+
+
 class SignUpController:
 
-    def handle(self, http_request: any) -> any:
+    def handle(self, http_request: HttpRequest) -> HttpResponse:
         if not http_request['body'].get('name'):
-            return {
-                'status_code': 400,
-                'body': Exception('Missing param: name')
-            }
+            return HttpResponse(400, Exception('Missing param: name'))
 
         if not http_request['body'].get('email'):
-            return {
-                'status_code': 400,
-                'body': Exception('Missing param: email')
-            }
+            return HttpResponse(400, Exception('Missing param: email'))
