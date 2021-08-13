@@ -1,4 +1,5 @@
 from presentation.controllers.signup import SignUpController
+from presentation.errors.missing_param_error import MissingParamError
 
 
 def test_should_return_400_if_no_name_is_provided():
@@ -12,7 +13,7 @@ def test_should_return_400_if_no_name_is_provided():
     }
     http_response = sut.handle(http_request)
     assert http_response.status_code == 400
-    assert isinstance(http_response.body, Exception)
+    assert isinstance(http_response.body, MissingParamError)
     assert http_response.body.args[0] == 'Missing param: name'
 
 
@@ -27,5 +28,5 @@ def test_should_return_400_if_no_email_is_provided():
     }
     http_response = sut.handle(http_request)
     assert http_response.status_code == 400
-    assert isinstance(http_response.body, Exception)
+    assert isinstance(http_response.body, MissingParamError)
     assert http_response.body.args[0] == 'Missing param: email'
