@@ -6,7 +6,7 @@ from presentation.protocols.http import HttpResponse, HttpRequest
 class SignUpController:
 
     def handle(self, http_request: HttpRequest) -> HttpResponse:
-        required_fields = ['name', 'email', 'password']
+        required_fields = ['name', 'email', 'password', 'password_confirmation']
         for field in required_fields:
             if not http_request['body'].get(field):
                 return bad_request(MissingParamError(field))
