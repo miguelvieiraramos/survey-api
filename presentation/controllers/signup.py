@@ -1,9 +1,10 @@
 from presentation.errors.missing_param_error import MissingParamError
-from presentation.helpers.http_helpers import bad_request
 from presentation.protocols.http import HttpResponse, HttpRequest
+from presentation.helpers.http_helpers import bad_request
+from presentation.protocols.controller import Controller
 
 
-class SignUpController:
+class SignUpController(Controller):
 
     def handle(self, http_request: HttpRequest) -> HttpResponse:
         required_fields = ['name', 'email', 'password', 'password_confirmation']
