@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 from presentation.controllers.signup import SignUpController
 from presentation.errors.invalid_param_error import InvalidParamError
 from presentation.errors.missing_param_error import MissingParamError
+from presentation.errors.server_error import ServerError
 from presentation.protocols.email_validator import EmailValidator
 
 
@@ -110,3 +111,20 @@ def test_should_call_EmailValidator_with_correct_email():
     }
     sut.handle(http_request)
     email_validator_stub.is_valid.assert_called_with(email='any_email@mail.com')
+
+
+def test_should_return_500_if_EmailValidator_raises():
+    sut, email_validator_stub = itemgetter('sut', 'email_validator_stub')(make_sut())
+    email_validator_stub.is_valid = MagicMock(side_effect=Exception())
+    http_request = {
+        'body': {
+            'name': 'any_name',
+            'email': 'any_email@mail.com',
+            'password': 'any_password',
+            'password_confirmation': 'any_password',
+        }
+    }
+    http_response = sut.handle(http_request)
+    assert http_response.status_code == 500
+    assert isinstance(http_response.body, ServerError)
+    assert http_response.body.args[0] == 'Internal server error'
