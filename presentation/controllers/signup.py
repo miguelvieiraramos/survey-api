@@ -1,9 +1,8 @@
+from presentation.helpers.http_helpers import bad_request, server_error
 from presentation.errors.invalid_param_error import InvalidParamError
 from presentation.errors.missing_param_error import MissingParamError
-from presentation.errors.server_error import ServerError
 from presentation.protocols.email_validator import EmailValidator
 from presentation.protocols.http import HttpResponse, HttpRequest
-from presentation.helpers.http_helpers import bad_request
 from presentation.protocols.controller import Controller
 
 
@@ -23,4 +22,4 @@ class SignUpController(Controller):
             if not is_valid:
                 return bad_request(InvalidParamError('email'))
         except Exception:
-            return HttpResponse(500, ServerError())
+            return server_error()
