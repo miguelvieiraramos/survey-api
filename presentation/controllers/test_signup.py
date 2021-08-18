@@ -2,9 +2,7 @@ from operator import itemgetter
 from unittest.mock import MagicMock
 
 from presentation.controllers.signup import SignUpController
-from presentation.errors.invalid_param_error import InvalidParamError
-from presentation.errors.missing_param_error import MissingParamError
-from presentation.errors.server_error import ServerError
+from presentation.errors import InvalidParamError, MissingParamError, ServerError
 from presentation.protocols.email_validator import EmailValidator
 
 

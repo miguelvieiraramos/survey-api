@@ -1,6 +1,5 @@
 from presentation.helpers.http_helpers import bad_request, server_error
-from presentation.errors.invalid_param_error import InvalidParamError
-from presentation.errors.missing_param_error import MissingParamError
+from presentation.errors import InvalidParamError, MissingParamError
 from presentation.protocols.email_validator import EmailValidator
 from presentation.protocols.http import HttpResponse, HttpRequest
 from presentation.protocols.controller import Controller
