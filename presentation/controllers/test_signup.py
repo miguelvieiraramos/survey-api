@@ -96,6 +96,23 @@ def test_should_return_400_if_invalid_email_is_provided():
     assert http_response.body.args[0] == 'Invalid param: email'
 
 
+def test_should_return_400_if_invalid_confirmation_password_is_provided():
+    sut = itemgetter('sut')(make_sut())
+    http_request = {
+        'body': {
+            'name': 'any_name',
+            'email': 'any_email@mail.com',
+            'password': 'any_password',
+            'password_confirmation': 'invalid_password',
+        }
+    }
+    http_response = sut.handle(http_request)
+    assert http_response.status_code == 400
+    assert isinstance(http_response.body, InvalidParamError)
+    assert http_response.body.args[0] == 'Invalid param: confirmation_password'
+
+
+
 def test_should_call_EmailValidator_with_correct_email():
     sut, email_validator_stub = itemgetter('sut', 'email_validator_stub')(make_sut())
     email_validator_stub.is_valid = MagicMock()
