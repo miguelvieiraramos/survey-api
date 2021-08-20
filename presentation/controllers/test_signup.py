@@ -96,7 +96,7 @@ def test_should_return_400_if_invalid_email_is_provided():
     assert http_response.body.args[0] == 'Invalid param: email'
 
 
-def test_should_return_400_if_invalid_confirmation_password_is_provided():
+def test_should_return_400_if_invalid_password_confirmation_is_provided():
     sut = itemgetter('sut')(make_sut())
     http_request = {
         'body': {

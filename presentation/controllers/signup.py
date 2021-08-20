@@ -1,3 +1,5 @@
+from operator import itemgetter
+
 from presentation.helpers.http_helpers import bad_request, server_error
 from presentation.errors import InvalidParamError, MissingParamError
 from presentation.protocols.email_validator import EmailValidator
@@ -16,12 +18,12 @@ class SignUpController(Controller):
             for field in required_fields:
                 if not http_request['body'].get(field):
                     return bad_request(MissingParamError(field))
-
-            is_valid: bool = self.email_validator.is_valid(email=http_request['body'].get('email'))
+            password, password_confirmation, email = itemgetter('password', 'password_confirmation', 'email')(
+                http_request['body'])
+            if password != password_confirmation:
+                return bad_request(InvalidParamError('confirmation_password'))
+            is_valid: bool = self.email_validator.is_valid(email=email)
             if not is_valid:
                 return bad_request(InvalidParamError('email'))
-
-            if http_request['body'].get('password') != http_request['body'].get('confirmation_password'):
-                return bad_request(InvalidParamError('confirmation_password'))
         except Exception:
             return server_error()
