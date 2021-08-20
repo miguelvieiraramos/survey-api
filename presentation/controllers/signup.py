@@ -20,5 +20,8 @@ class SignUpController(Controller):
             is_valid: bool = self.email_validator.is_valid(email=http_request['body'].get('email'))
             if not is_valid:
                 return bad_request(InvalidParamError('email'))
+
+            if http_request['body'].get('password') != http_request['body'].get('confirmation_password'):
+                return bad_request(InvalidParamError('confirmation_password'))
         except Exception:
             return server_error()
