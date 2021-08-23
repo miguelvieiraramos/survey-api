@@ -1,6 +1,8 @@
 from operator import itemgetter
 from unittest.mock import MagicMock
 
+from domain.models.account import AccountModel
+from domain.usecases.add_account import AddAccount
 from presentation.controllers.signup import SignUpController
 from presentation.errors import InvalidParamError, MissingParamError, ServerError
 from presentation.protocols.email_validator import EmailValidator
@@ -11,15 +13,31 @@ class EmailValidatorStub(EmailValidator):
         return True
 
 
+class AddAccountStub(AddAccount):
+    def add(self, name: str, email: str, password: str) -> AccountModel:
+        return AccountModel(
+            id='valid_id',
+            name='valid_name',
+            email='valid_email@mail.com',
+            password='valid_password'
+        )
+
+
+def make_add_account() -> AddAccount:
+    return AddAccountStub()
+
+
 def make_email_validator():
     return EmailValidatorStub()
 
 
 def make_sut():
     email_validator_stub = make_email_validator()
+    add_account_stub = make_add_account()
     return {
-        'sut': SignUpController(email_validator=email_validator_stub),
-        'email_validator_stub': email_validator_stub
+        'sut': SignUpController(email_validator=email_validator_stub, add_account=add_account_stub),
+        'email_validator_stub': email_validator_stub,
+        'add_account_stub': add_account_stub
     }
 
 
@@ -147,7 +165,6 @@ def test_should_call_AddAccount_with_correct_params():
         name='any_name',
         email='any_email@mail.com',
         password='any_password',
-        password_confirmation='any_password'
     )
 
 
