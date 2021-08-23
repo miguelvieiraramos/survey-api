@@ -11,8 +11,12 @@ class EmailValidatorStub(EmailValidator):
         return True
 
 
+def make_email_validator():
+    return EmailValidatorStub()
+
+
 def make_sut():
-    email_validator_stub = EmailValidatorStub()
+    email_validator_stub = make_email_validator()
     return {
         'sut': SignUpController(email_validator=email_validator_stub),
         'email_validator_stub': email_validator_stub
@@ -112,7 +116,6 @@ def test_should_return_400_if_invalid_password_confirmation_is_provided():
     assert http_response.body.args[0] == 'Invalid param: confirmation_password'
 
 
-
 def test_should_call_EmailValidator_with_correct_email():
     sut, email_validator_stub = itemgetter('sut', 'email_validator_stub')(make_sut())
     email_validator_stub.is_valid = MagicMock()
@@ -126,6 +129,26 @@ def test_should_call_EmailValidator_with_correct_email():
     }
     sut.handle(http_request)
     email_validator_stub.is_valid.assert_called_with(email='any_email@mail.com')
+
+
+def test_should_call_AddAccount_with_correct_params():
+    sut, add_account_stub = itemgetter('sut', 'add_account_stub')(make_sut())
+    add_account_stub.add = MagicMock()
+    http_request = {
+        'body': {
+            'name': 'any_name',
+            'email': 'any_email@mail.com',
+            'password': 'any_password',
+            'password_confirmation': 'any_password',
+        }
+    }
+    sut.handle(http_request)
+    add_account_stub.add.assert_called_with(
+        name='any_name',
+        email='any_email@mail.com',
+        password='any_password',
+        password_confirmation='any_password'
+    )
 
 
 def test_should_return_500_if_EmailValidator_raises():
