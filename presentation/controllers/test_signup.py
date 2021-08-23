@@ -183,3 +183,20 @@ def test_should_return_500_if_EmailValidator_raises():
     assert http_response.status_code == 500
     assert isinstance(http_response.body, ServerError)
     assert http_response.body.args[0] == 'Internal server error'
+
+
+def test_should_return_500_if_AddAccount_raises():
+    sut, add_account_stub = itemgetter('sut', 'add_account_stub')(make_sut())
+    add_account_stub.add = MagicMock(side_effect=Exception())
+    http_request = {
+        'body': {
+            'name': 'any_name',
+            'email': 'any_email@mail.com',
+            'password': 'any_password',
+            'password_confirmation': 'any_password',
+        }
+    }
+    http_response = sut.handle(http_request)
+    assert http_response.status_code == 500
+    assert isinstance(http_response.body, ServerError)
+    assert http_response.body.args[0] == 'Internal server error'
