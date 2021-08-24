@@ -200,3 +200,23 @@ def test_should_return_500_if_AddAccount_raises():
     assert http_response.status_code == 500
     assert isinstance(http_response.body, ServerError)
     assert http_response.body.args[0] == 'Internal server error'
+
+
+def test_should_return_200_valid_data_is_provided():
+    sut = itemgetter('sut')(make_sut())
+    http_request = {
+        'body': {
+            'name': 'valid_name',
+            'email': 'valid_email@mail.com',
+            'password': 'valid_password',
+            'password_confirmation': 'valid_password',
+        }
+    }
+    http_response = sut.handle(http_request)
+    assert http_response.status_code == 200
+    assert http_response.body == {
+        'id': 'valid_id',
+        'name': 'valid_name',
+        'email': 'valid_email@mail.com',
+        'password': 'valid_password'
+    }
