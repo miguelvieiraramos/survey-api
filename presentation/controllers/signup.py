@@ -2,7 +2,7 @@ from operator import itemgetter
 
 from domain.models.account import AccountModel
 from domain.usecases.add_account import AddAccount
-from presentation.helpers.http_helpers import bad_request, server_error
+from presentation.helpers.http_helpers import bad_request, server_error, ok
 from presentation.errors import InvalidParamError, MissingParamError
 from presentation.protocols.email_validator import EmailValidator
 from presentation.protocols.http import HttpResponse, HttpRequest
@@ -29,6 +29,6 @@ class SignUpController(Controller):
             if not is_valid:
                 return bad_request(InvalidParamError('email'))
             account: AccountModel = self.add_account.add(name=name, email=email, password=password)
-            return HttpResponse(status_code=200, body=vars(account))
+            return ok(vars(account))
         except Exception:
             return server_error()
