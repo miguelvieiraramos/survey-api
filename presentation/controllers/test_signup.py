@@ -2,7 +2,7 @@ from operator import itemgetter
 from unittest.mock import MagicMock
 
 from domain.models.account import AccountModel
-from domain.usecases.add_account import AddAccount
+from domain.usecases.add_account import AddAccount, AddAccountModel
 from presentation.controllers.signup import SignUpController
 from presentation.errors import InvalidParamError, MissingParamError, ServerError
 from presentation.protocols.email_validator import EmailValidator
@@ -161,11 +161,7 @@ def test_should_call_AddAccount_with_correct_params():
         }
     }
     sut.handle(http_request)
-    add_account_stub.add.assert_called_with(
-        name='any_name',
-        email='any_email@mail.com',
-        password='any_password',
-    )
+    add_account_stub.add.assert_called_with(AddAccountModel('any_name', 'any_email@mail.com', 'any_password'))
 
 
 def test_should_return_500_if_EmailValidator_raises():
