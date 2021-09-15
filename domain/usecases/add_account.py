@@ -14,5 +14,5 @@ class AddAccountModel:
 class AddAccount(ABC):
 
     @abstractmethod
-    def add(self, account: AddAccountModel) -> AccountModel:
+    def add(self, account: AddAccountModel) -> AccountModel: # pragma: no cover
         pass

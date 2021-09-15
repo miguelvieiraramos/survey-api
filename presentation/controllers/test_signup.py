@@ -14,7 +14,7 @@ class EmailValidatorStub(EmailValidator):
 
 
 class AddAccountStub(AddAccount):
-    def add(self, name: str, email: str, password: str) -> AccountModel:
+    def add(self, account: AddAccountModel) -> AccountModel:
         return AccountModel(
             id='valid_id',
             name='valid_name',
