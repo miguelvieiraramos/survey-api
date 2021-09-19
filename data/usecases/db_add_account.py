@@ -12,6 +12,7 @@ class DbAddAccount(AddAccount):
 
     def add(self, account_data: AddAccountModel) -> AccountModel:
         hashed_password = self.encrypter.encrypt(account_data.password)
-        self.add_account_repository.add(
+        account = self.add_account_repository.add(
             AddAccountModel(name=account_data.name, email=account_data.email, password=hashed_password)
         )
+        return account
