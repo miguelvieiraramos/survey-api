@@ -22,7 +22,7 @@ class AddAccountRepositoryStub(AddAccountRepository):
             id='valid_id',
             name='valid_name',
             email='valid_email',
-            password='valid_password'
+            password='hashed_password'
         )
 
 
@@ -84,3 +84,18 @@ def test_should_raise_if_AddAccountRepository_raises():
 
     with pytest.raises(Exception):
         sut.add(account_data)
+
+
+def test_should_returns_an_AccountModel_on_success():
+    sut, _, _ = make_sut()
+    account_data = AddAccountModel(
+        name='valid_name',
+        email='valid_email',
+        password='valid_password'
+    )
+    account = sut.add(account_data)
+    assert isinstance(account, AccountModel)
+    assert account.id == 'valid_id'
+    assert account.name == 'valid_name'
+    assert account.email == 'valid_email'
+    assert account.password == 'hashed_password'
