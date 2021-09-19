@@ -68,5 +68,19 @@ def test_should_call_AddAccountRepository_with_correct_params():
     )
     sut.add(account_data)
     add_account_repository_stub.add.assert_called_once_with(
-        AddAccountModel(name='valid_name',  email='valid_email', password='hashed_password')
+        AddAccountModel(name='valid_name', email='valid_email', password='hashed_password')
     )
+
+
+def test_should_raise_if_AddAccountRepository_raises():
+    sut, _, add_account_repository_stub = make_sut()
+    add_account_repository_stub.add = Mock()
+    add_account_repository_stub.add.side_effect = Exception
+    account_data = AddAccountModel(
+        name='valid_name',
+        email='valid_email',
+        password='valid_password'
+    )
+
+    with pytest.raises(Exception):
+        sut.add(account_data)
