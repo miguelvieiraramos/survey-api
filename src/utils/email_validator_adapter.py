@@ -1,4 +1,4 @@
-from presentation.protocols.email_validator import EmailValidator
+from src.presentation.protocols.email_validator import EmailValidator
 import validators
 
 

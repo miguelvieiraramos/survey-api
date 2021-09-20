@@ -1,12 +1,12 @@
 from operator import itemgetter
 
-from domain.models.account import AccountModel
-from domain.usecases.add_account import AddAccount, AddAccountModel
-from presentation.helpers.http_helpers import bad_request, server_error, ok
-from presentation.errors import InvalidParamError, MissingParamError
-from presentation.protocols.email_validator import EmailValidator
-from presentation.protocols.http import HttpResponse, HttpRequest
-from presentation.protocols.controller import Controller
+from src.domain.models.account import AccountModel
+from src.domain.usecases.add_account import AddAccount, AddAccountModel
+from src.presentation.helpers.http_helpers import bad_request, server_error, ok
+from src.presentation.errors import InvalidParamError, MissingParamError
+from src.presentation.protocols.email_validator import EmailValidator
+from src.presentation.protocols.http import HttpResponse, HttpRequest
+from src.presentation.protocols.controller import Controller
 
 
 class SignUpController(Controller):

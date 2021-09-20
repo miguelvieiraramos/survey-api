@@ -1,11 +1,11 @@
 from operator import itemgetter
 from unittest.mock import MagicMock
 
-from domain.models.account import AccountModel
-from domain.usecases.add_account import AddAccount, AddAccountModel
-from presentation.controllers.signup import SignUpController
-from presentation.errors import InvalidParamError, MissingParamError, ServerError
-from presentation.protocols.email_validator import EmailValidator
+from src.domain.models.account import AccountModel
+from src.domain.usecases.add_account import AddAccount, AddAccountModel
+from src.presentation.controllers.signup import SignUpController
+from src.presentation.errors import InvalidParamError, MissingParamError, ServerError
+from src.presentation.protocols.email_validator import EmailValidator
 
 
 class EmailValidatorStub(EmailValidator):

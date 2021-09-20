@@ -2,11 +2,11 @@ from unittest.mock import Mock
 
 import pytest
 
-from data.protocols.add_account_repository import AddAccountRepository
-from data.protocols.encrypter import Encrypter
-from data.usecases.db_add_account import DbAddAccount
-from domain.models.account import AccountModel
-from domain.usecases.add_account import AddAccountModel
+from src.data.protocols.add_account_repository import AddAccountRepository
+from src.data.protocols.encrypter import Encrypter
+from src.data.usecases.db_add_account import DbAddAccount
+from src.domain.models.account import AccountModel
+from src.domain.usecases.add_account import AddAccountModel
 
 
 class EncrypterStub(Encrypter):

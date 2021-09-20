@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from presentation.protocols.http import HttpRequest, HttpResponse
+from src.presentation.protocols.http import HttpRequest, HttpResponse
 
 
 class Controller(ABC):
