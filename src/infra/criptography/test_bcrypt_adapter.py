@@ -1,5 +1,7 @@
 from unittest.mock import patch, Mock
 
+import pytest
+
 from src.infra.criptography.bcrypt_adapter import BcryptAdapter
 
 
@@ -20,3 +22,12 @@ def test_should_return_hash_on_success(mock_bcrypt):
     hash = sut.encrypt('any_value')
 
     assert hash == 'hash'
+
+
+@patch('src.infra.criptography.bcrypt_adapter.bcrypt')
+def test_should_raise_if_bcrypt_raises(mock_bcrypt):
+    sut = BcryptAdapter()
+    mock_bcrypt.hashpw = Mock(side_effect=Exception)
+
+    with pytest.raises(Exception):
+        sut.encrypt('any_value')
