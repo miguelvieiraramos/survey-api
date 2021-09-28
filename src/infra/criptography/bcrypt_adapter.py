@@ -9,4 +9,4 @@ class BcryptAdapter(Encrypter):
         self.salt = salt
 
     def encrypt(self, value: str) -> str:
-        bcrypt.hashpw(value, self.salt)
+        return bcrypt.hashpw(value.encode(), self.salt)
